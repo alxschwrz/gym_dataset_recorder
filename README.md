@@ -4,6 +4,7 @@ Package to record Transitions in OpenAI Gym Environments.
 ## Installation
 ```bash
 git clone https://github.com/alxschwrz/gym-dataset-recorder.git
+cd gym-dataset-recorder
 pip3 install -e .
 ```
 
