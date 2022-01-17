@@ -13,7 +13,7 @@ class DatasetGenerator(object):
                 'actions': [],
                 'terminals': [],
                 'rewards': [],
-                'info': [],
+                'infos': [],
                 }
         if self.goal:
             data['goal'] = []
@@ -28,7 +28,7 @@ class DatasetGenerator(object):
         self.data['actions'].append(a)
         self.data['terminals'].append(done)
         self.data['rewards'].append(rew)
-        self.data['info'].append(info)
+        self.data['infos'].append(info)
         if self.goal:
             self.data['goal'].append(goal)
 
