@@ -13,6 +13,7 @@ class DatasetGenerator(object):
                 'actions': [],
                 'terminals': [],
                 'rewards': [],
+                'info': [],
                 }
         if self.goal:
             data['goal'] = []
@@ -21,12 +22,13 @@ class DatasetGenerator(object):
     def __len__(self):
         return self._num_samples
 
-    def append_data(self, s, a, rew, done, env_data, goal=None):
+    def append_data(self, s, a, rew, done, info, goal=None):
         self._num_samples += 1
         self.data['observations'].append(s)
         self.data['actions'].append(a)
         self.data['terminals'].append(done)
         self.data['rewards'].append(rew)
+        self.data['info'].append(info)
         if self.goal:
             self.data['goal'].append(goal)
 
