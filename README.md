@@ -7,6 +7,10 @@ git clone https://github.com/alxschwrz/gym-dataset-recorder.git
 cd gym-dataset-recorder
 pip3 install -e .
 ```
+## Run example
+```
+python3 example.py
+```
 
 ##
 Recorded data is stored as csv-file containing the following information. 
