@@ -1,28 +1,41 @@
 import pandas as pd
-import csv
+import numpy as np
 
 
-def reset_data():
-    return {'observations': [],
-            'actions': [],
-            'terminals': [],
-            'rewards': [],
-            #'infos/goal': [],
-            #'infos/task': [],
-            #'infos/qpos': [],
-            #'infos/qvel': [],
-            }
+class DatasetGenerator(object):
+    def __init__(self, goal=False):
+        self.goal = goal
+        self.data = self._reset_data()
+        self._num_samples = 0
 
-def append_data(data, s, a, tgt, done, env_data):
-    data['observations'].append(s)
-    data['actions'].append(a)
-    data['rewards'].append(0.0)
-    data['terminals'].append(done)
-    #data['infos/goal'].append(tgt)
-    #data['infos/qpos'].append(env_data.qpos.ravel().copy())
-    #data['infos/qvel'].append(env_data.qvel.ravel().copy())
+    def _reset_data(self):
+        data = {'observations': [],
+                'actions': [],
+                'terminals': [],
+                'rewards': [],
+                }
+        if self.goal:
+            data['goal'] = []
+        return data
+
+    def __len__(self):
+        return self._num_samples
+
+    def append_data(self, s, a, rew, done, env_data, goal=None):
+        self._num_samples += 1
+        self.data['observations'].append(s)
+        self.data['actions'].append(a)
+        self.data['terminals'].append(done)
+        self.data['rewards'].append(rew)
+        if self.goal:
+            self.data['goal'].append(goal)
+
+    def reformat_data_next_obs(self):
+        self.data['next_observations'] = self.data['observations'][1:]
+        self.data['next_observations'].append(np.zeros(self.data['observations'][0].shape)) # last element has no next observation
+
+    def write_data(self, filename='recorded_data_templatename.csv'):
+        df = pd.DataFrame.from_dict(self.data)
+        df.to_csv(filename)
 
 
-def store_data(data, filename='data.csv'):
-    df = pd.DataFrame.from_dict(data)
-    df.to_csv(filename)

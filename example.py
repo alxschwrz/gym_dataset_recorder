@@ -3,20 +3,20 @@ import generate_dataset as gd
 
 
 def main():
-    env = gym.make('MountainCarContinuous-v0')
+    env = gym.make('MountainCar-v0')
     observation = env.reset()
-    data = gd.reset_data()
-    for t in range(105):
+    recorder = gd.DatasetGenerator(goal=False)
+    for t in range(100):
         env.render()
-        #print(observation)
         action = env.action_space.sample()
         observation, reward, done, info = env.step(action)
-        gd.append_data(data, observation, action, 0, done, None)
-        #print(observation, reward, done, info)
+        recorder.append_data(observation, action, reward, done, info)
         if done:
             print("Finished after {} timesteps".format(t + 1))
             break
-    gd.store_data(data)
+    recorder.write_data(filename='recorded_data.csv')
+    recorder.reformat_data_next_obs()
+    recorder.write_data(filename='recorded_data_next_obs.csv')
 
 
 if __name__ == "__main__":
