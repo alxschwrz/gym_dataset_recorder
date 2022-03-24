@@ -11,7 +11,6 @@ pip3 install -e .
 ```
 python3 example.py
 ```
-
 ##
 Recorded data is stored as csv-file containing the following information. 
 - `observations`: An [N x observation] dimensional array of observations.
