@@ -3,10 +3,11 @@ import numpy as np
 
 
 class DatasetGenerator(object):
-    def __init__(self, goal=False):
+    def __init__(self, goal=False, observationSpaceType="array"):
         self.goal = goal
         self.data = self._reset_data()
         self._num_samples = 0
+        self._observationSpaceType = observationSpaceType
 
     def _reset_data(self):
         data = {'observations': [],
@@ -34,7 +35,14 @@ class DatasetGenerator(object):
 
     def reformat_data_next_obs(self):
         self.data['next_observations'] = self.data['observations'][1:]
-        self.data['next_observations'].append(np.zeros(self.data['observations'][0].shape)) # last element has no next observation
+        if self._observationSpaceType == "array":
+            self.data['next_observations'].append(np.zeros(self.data['observations'][0].shape)) # last element has no next observation
+        elif self._observationSpaceType == "dict":
+            last_row = self.data['observations'][0]
+            for key in last_row:
+                last_row[key][:] = 0
+            self.data['next_observations'].append(last_row)
+
 
     def write_data(self, filename='recorded_data_templatename.csv'):
         df = pd.DataFrame.from_dict(self.data)
