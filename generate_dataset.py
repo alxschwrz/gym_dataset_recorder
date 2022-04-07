@@ -44,8 +44,9 @@ class DatasetGenerator(object):
             self.data['next_observations'].append(last_row)
 
 
-    def write_data(self, filename='recorded_data_templatename.csv'):
+    def write_data(self, filename='recorded_data_templatename', filetype="pickle"):
         df = pd.DataFrame.from_dict(self.data)
-        df.to_csv(filename)
+        df.to_csv(filename+'.csv')
+        df.to_pickle(filename+'.pkl')
 
 
