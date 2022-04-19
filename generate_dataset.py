@@ -45,8 +45,11 @@ class DatasetGenerator(object):
 
 
     def write_data(self, filename='recorded_data_templatename', filetype="pickle"):
+        print('writing dataset to file ...')
         df = pd.DataFrame.from_dict(self.data)
         df.to_csv(filename+'.csv')
+        print('dataset saved as {}'.format(filename+'.csv'))
         df.to_pickle(filename+'.pkl')
+        print('dataset saved as {}'.format(filename+'.pkl'))
 
 
