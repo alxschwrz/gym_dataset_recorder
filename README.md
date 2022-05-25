@@ -1,5 +1,5 @@
 # gym-dataset-recorder
-Package to record Transitions in OpenAI Gym Environments.
+Package for recording transitions in OpenAI Gym Environments and generating datasets from them.
 
 ## Installation
 ```bash
